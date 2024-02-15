@@ -1,8 +1,10 @@
 // Set up mongoose connection
+require("dotenv").config();
 const express = require("express");
-const dayjs = require("dayjs")
+const dayjs = require("dayjs");
 const mongoose = require("mongoose");
 const ShoppingList = require("./models/ShoppingList");
+const cors = require("cors")
 
 
 const port = process.env.PORT;
@@ -11,12 +13,14 @@ const port = process.env.PORT;
 const app = express();
 app.use(express.json());
 
+app.use(cors())
 
 
-mongoose.connect("mongodb+srv://rhope11:<>@cluster00.iundvi3.mongodb.net/?retryWrites=true&w=majority")
+// link to mongoose
+mongoose.connect(process.env.DATABASE_URL);
 mongoose.set("strictQuery", false);
-const mongoDB = "";
-{ "protectConnectionStrings": true }
+const mongoDB = mongoose.connection;
+db.once('open', () => console.log('Locked in with MongoDB'));
 
 main().catch((err) => console.log(err));
 async function main() {
@@ -42,6 +46,8 @@ app.get('/shoppinglists', (req, res) => {
     })
     .catch((error) => res.status(400).json({ message: 'Bad request' }))
 })
+
+app.post('/shoppinglist', (req, res) +>)
 
 
 app.listen(port, () => console.log(`Application is running port ${port}`))
