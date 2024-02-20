@@ -20,7 +20,7 @@ app.use(cors())
 mongoose.connect(process.env.DATABASE_URL);
 mongoose.set("strictQuery", false);
 const mongoDB = mongoose.connection;
-db.once('open', () => console.log('Locked in with MongoDB'));
+db.once('open', () => console.log('MongoDB Active'));
 
 main().catch((err) => console.log(err));
 async function main() {
@@ -30,7 +30,11 @@ async function main() {
 app.post("/food", async (req, response) => {
   const food = new foodModel(req.body);
 })
-
+app.post('/shoppinglists', (req, res) => {
+  const newList = new List(req.body)
+  newList.save()
+  res.status(201).json(newList)
+})
 
 app.listen(port, () => console.log('Example app is listening on port 3000.'));
 // const ShoppingLists = require("./models/ShoppingLists");
@@ -47,7 +51,12 @@ app.get('/shoppinglists', (req, res) => {
     .catch((error) => res.status(400).json({ message: 'Bad request' }))
 })
 
-app.post('/shoppinglist', (req, res) +>)
+
+app.post('/shoppinglist', (req, res) => {
+  const newList = new List(req.body)
+  newList.save()
+  res.status(201).json(newList)
+})
 
 
-app.listen(port, () => console.log(`Application is running port ${port}`))
+app.listen(port, () => console.log(`Application is running on port ${port}`))
